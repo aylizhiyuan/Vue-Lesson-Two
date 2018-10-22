@@ -11,7 +11,7 @@
     <el-main class="bg-dark">
       <el-row>
         <el-col :span="10" :offset="7">
-          <el-form class="loginform" :label-position="left" label-width="80px" ref="loginForm">
+          <el-form class="loginform" :label-position="'left'" label-width="80px" ref="loginForm">
             <el-form-item label="用户名">
               <el-input type="text"></el-input>
             </el-form-item>
