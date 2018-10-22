@@ -34,6 +34,8 @@ import Login from 'pages/Login'
 import Register from 'pages/Register'
 //引入404组件
 import Error from 'pages/404'*/
+
+
 //让路由规则生效
 Vue.use(Router)
 
