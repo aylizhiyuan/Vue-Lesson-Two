@@ -10,12 +10,18 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
-
+    //这里，可以设置vue项目的跨域
+    //只要是在vue项目中请求/api这样的地址，请求都发给localhost:3000端口
+    proxyTable: {
+      '/api':{
+        target:'http://localhost:3000',
+        changeOrigin:true
+      }
+    },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    autoOpenBrowser: false,
+    autoOpenBrowser: true,//npm run dev的时候会自动打开浏览器
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
