@@ -11,15 +11,15 @@
         <el-main class="bg-dark">
           <el-row>
             <el-col :span="10" :offset="7">
-              <el-form class="regform" :label-position="'left'" label-width="80px" ref="regForm">
-                <el-form-item label="用户名">
-                  <el-input type="text"></el-input>
+              <el-form :model="regForm" class="regform" :rules="rules" :label-position="'left'" label-width="80px" ref="regForm">
+                <el-form-item label="用户名" prop="username">
+                  <el-input v-model="regForm.username" type="text"></el-input>
                 </el-form-item>
-                <el-form-item label="密码">
-                  <el-input type="password"></el-input>
+                <el-form-item label="密码" prop="password">
+                  <el-input v-model="regForm.password" type="password"></el-input>
                 </el-form-item>
-                <el-form-item label="确认密码">
-                  <el-input type="password"></el-input>
+                <el-form-item label="确认密码" prop="checkPassword">
+                  <el-input v-model="regForm.checkPassword" type="password"></el-input>
                 </el-form-item>
                 <el-form-item>
                   <el-button type="success">注册</el-button>
@@ -36,8 +36,53 @@
     export default {
       name: "Register",
       data(){
+        //第一次输入密码的自定义验证规则
+        let validatorPass1 = (rule,value,callback)=>{
+          //console.log(value);
+          //密码必须是数字和字母的组合，密码的字符不能是空格，不能是中文，而且长度必须在6-16位
+          let reg = /(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^[^\s\u4e00-\u9fa5]{6,16}$/
+          if(!reg.test(value)){
+            callback(new Error('密码必须是数字和字母的组合,长度6-16位'))
+          }else{
+            callback()
+          }
+        };
+        //第二次输入密码的时候
+        let validatorPass2 = (rule,value,callback)=>{
+          if(value !== this.regForm.password){
+            callback(new Error('两次密码输入一样,请重新输入'))
+          }else{
+            callback();
+          }
+        };
         return {
-          activeIndex:"/register"
+          //绑定的表单数据
+          regForm:{
+            username:'',
+            password:'',
+            checkPassword:''
+          },
+          //当前切换的导航
+          activeIndex:"/register",
+          //表单验证规则
+          rules:{
+            //用户名的验证规则
+            username:[
+              {required:true,message:"请输入用户名",trigger:'blur'},
+              {min:6,max:16,message:'用户名必须在6-16位之间',trigger:'blur'}
+            ],
+            //密码的验证规则
+            password:[
+              {required:true,message:'请输入密码',trigger:'blur'},
+              //自定义的验证规则
+              {validator:validatorPass1,trigger:'blur'}
+            ],
+            //确认密码的验证规则
+            checkPassword:[
+              {required:true,message:'请输入确认密码',trigger:'blur'},
+              {validator:validatorPass2,trigger:'blur'}
+            ]
+          }
         }
       },
       methods:{
