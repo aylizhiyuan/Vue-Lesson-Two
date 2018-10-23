@@ -22,8 +22,8 @@
                   <el-input v-model="regForm.checkPassword" type="password"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="success">注册</el-button>
-                  <el-button type="danger">重置</el-button>
+                  <el-button type="success" @click="submitForm('regForm')">注册</el-button>
+                  <el-button type="danger" @click="resetForm('regForm')">重置</el-button>
                 </el-form-item>
               </el-form>
             </el-col>
@@ -87,7 +87,24 @@
       },
       methods:{
         handleSelect:function(key,keypath){
-          console.log(keypath);
+          //console.log(keypath);
+        },
+        //重置表单数据
+        resetForm:function(formName){
+          //清空表单数据
+          this.$refs[formName].resetFields();
+        },
+        //发送表单数据
+        submitForm:function(formName){
+            this.$refs[formName].validate((valid)=>{
+              if(valid){
+                //验证规则成功之后，再进行发送请求
+
+              }else{
+                //console.log('验证失败');
+                return false;
+              }
+            })
         }
       }
     }
