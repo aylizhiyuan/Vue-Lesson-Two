@@ -33,6 +33,8 @@
 </template>
 
 <script>
+    //引入request发请求的axios实例
+    import request from '@/utils/request'
     export default {
       name: "Register",
       data(){
@@ -99,7 +101,15 @@
             this.$refs[formName].validate((valid)=>{
               if(valid){
                 //验证规则成功之后，再进行发送请求
-
+                request({
+                  url:'/api/register',
+                  method:'post',
+                  data:this.regForm
+                }).then(({data})=>{
+                  console.log(data);
+                }).catch(err=>{
+                  console.log(err);
+                })
               }else{
                 //console.log('验证失败');
                 return false;
