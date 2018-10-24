@@ -9,10 +9,7 @@ import store from '@/store'
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 
 //1.首先创建一个axios的实例，进行请求的一些全局配置
-const service = axios.create({
-  //请求的过期时间
-  timeout:5000
-})
+const service = axios.create()
 //请求发送之前的一个拦截器
 service.interceptors.request.use(
   config => {

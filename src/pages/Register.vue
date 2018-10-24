@@ -106,7 +106,16 @@
                   method:'post',
                   data:this.regForm
                 }).then(({data})=>{
-                  console.log(data);
+                  let success = data.success; //成功与否的布尔值
+                  let message = data.message;
+                  let userInfo = data.data; //用户的信息
+                  if(success){
+                    //成功后跳转
+                    this.$router.push('/login');
+                  }else{
+                    //失败后给出错误提示
+                    this.$message.success(message);
+                  }
                 }).catch(err=>{
                   console.log(err);
                 })

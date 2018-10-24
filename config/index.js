@@ -13,8 +13,10 @@ module.exports = {
     //只要是在vue项目中请求/api这样的地址，请求都发给localhost:3000端口
     proxyTable: {
       '/api':{
-        target:'http://localhost:3000',
-        changeOrigin:true
+        target:'http://localhost:3000'
+      },
+      '/api/*':{
+        target:'http://localhost:3000'
       }
     },
     // Various Dev Server settings
