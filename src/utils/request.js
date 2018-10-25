@@ -23,16 +23,22 @@ service.interceptors.request.use(
   }
 )
 //请求发送后数据返回的时候的拦截器
+//respone拦截器
 service.interceptors.response.use(
-  response=>response,
-  error => {
-    console.log('err' + error)
-    Message({
-      message:error.message,
-      type:'error',
-      duration:5 * 1000
-    })
-    return Promise.reject(error)
+  response => {
+    return response;
+  },
+  error => { //默认除了2XX之外的都是错误的，就会走这里
+    if(error.response){
+      switch(error.response.status){
+        case 401:
+          store.dispatch('UserLogout'); //可能是token过期，清除它
+          router.replace({ //跳转到登录页面
+            path: 'login'
+          });
+      }
+    }
+    return Promise.reject(error.response);
   }
-)
+);
 export default service
