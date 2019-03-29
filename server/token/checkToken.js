@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 module.exports = async ( ctx, next ) => {
   const XToken = ctx.get('X-Token');
   if (XToken === '') {
